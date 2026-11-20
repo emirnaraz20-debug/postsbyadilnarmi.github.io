@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#f7f6f2">
+<title>Posts by Adil</title>
+<style>
+:root{--bg:#f7f6f2;--paper:#fff;--ink:#20211f;--muted:#777970;--line:#e7e5de;--accent:#243c32;--soft:#eef1ed;--danger:#9c3434;--shadow:0 12px 35px rgba(25,30,25,.07)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Georgia,"Times New Roman",serif}
+button,input,textarea,select{font:inherit}
+button{cursor:pointer}
+.site-header{border-bottom:1px solid var(--line);background:rgba(247,246,242,.96)}
+.header-inner{max-width:1120px;margin:auto;padding:27px 24px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+.brand{font-size:clamp(25px,4vw,35px);font-weight:700;letter-spacing:-1.2px;text-decoration:none;color:var(--ink)}
+.header-actions{display:flex;gap:10px;align-items:center}
+main{max-width:1120px;margin:0 auto;padding:48px 24px 80px}
+.intro{padding:14px 0 34px;border-bottom:1px solid var(--line);margin-bottom:28px}
+.intro h1{font-size:clamp(35px,6vw,58px);font-weight:400;letter-spacing:-2px;line-height:1.08;margin:0 0 12px}
+.intro p{font:15px/1.7 Arial,sans-serif;color:var(--muted);margin:0;max-width:620px}
+.toolbar{display:flex;gap:12px;flex-wrap:wrap;margin:0 0 26px}
+.toolbar input{flex:1;min-width:190px}
+input,textarea,select{width:100%;padding:12px 13px;border:1px solid var(--line);border-radius:5px;background:#fff;color:var(--ink);outline:none}
+input:focus,textarea:focus,select:focus{border-color:#718579;box-shadow:0 0 0 3px rgba(36,60,50,.08)}
+.toolbar select{width:auto;min-width:160px}
+.category-strip{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 28px}
+.chip{border:1px solid var(--line);background:transparent;color:var(--muted);padding:8px 13px;border-radius:30px;font:12px Arial,sans-serif}
+.chip.active,.chip:hover{background:var(--accent);border-color:var(--accent);color:#fff}
+.post-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px}
+.post-card{background:var(--paper);border:1px solid var(--line);border-radius:7px;overflow:hidden;display:flex;flex-direction:column;min-width:0;transition:transform .2s,box-shadow .2s}
+.post-card:hover{transform:translateY(-3px);box-shadow:var(--shadow)}
+.cover{width:100%;aspect-ratio:16/9;object-fit:cover;background:#e9e9e3;display:block}
+.cover-placeholder{aspect-ratio:16/9;background:linear-gradient(135deg,#e7e9e2,#f1eee6);display:grid;place-items:center;color:#92978d;font:12px Arial,sans-serif;letter-spacing:2px}
+.post-card-body{padding:21px;display:flex;flex-direction:column;flex:1}
+.meta{font:11px Arial,sans-serif;letter-spacing:.7px;text-transform:uppercase;color:var(--muted)}
+.post-card h2{font-size:24px;line-height:1.25;font-weight:400;margin:12px 0}
+.excerpt{font:14px/1.7 Arial,sans-serif;color:var(--muted);margin:0 0 20px}
+.read-link{margin-top:auto;align-self:flex-start;border:0;background:none;padding:0;color:var(--accent);font:13px Arial,sans-serif;font-weight:700}
+.post-actions{display:flex;gap:14px;align-items:center;margin-top:15px}.share-link{border:0;background:none;padding:0;color:var(--muted);font:12px Arial,sans-serif}.share-link:hover{color:var(--accent)}
+.empty{grid-column:1/-1;padding:60px 20px;text-align:center;color:var(--muted);background:var(--paper);border:1px solid var(--line);font:14px Arial,sans-serif}
+.btn{border:1px solid var(--accent);background:var(--accent);color:#fff;border-radius:5px;padding:11px 16px;font:13px Arial,sans-serif}
+.btn:hover{filter:brightness(1.1)}
+.btn.secondary{background:transparent;color:var(--accent)}
+.btn.danger{background:var(--danger);border-color:var(--danger)}
+.btn.small{padding:8px 11px;font-size:12px}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+footer{border-top:1px solid var(--line);padding:28px 24px;text-align:center;color:var(--muted);font:12px Arial,sans-serif}
+.modal-backdrop{position:fixed;inset:0;background:rgba(18,22,19,.55);z-index:20;display:none;align-items:flex-start;justify-content:center;padding:24px;overflow:auto}
+.modal-backdrop.show{display:flex}
+.modal{width:min(850px,100%);background:var(--paper);border-radius:8px;padding:28px;box-shadow:var(--shadow);margin:auto}
+.modal-head{display:flex;justify-content:space-between;align-items:center;gap:15px;margin-bottom:20px}
+.modal-head h2{font-size:27px;font-weight:400;margin:0}
+.icon-btn{border:1px solid var(--line);background:white;border-radius:5px;padding:7px 11px}
+.article-content{font-size:18px;line-height:1.85;overflow-wrap:anywhere}
+.article-content img{max-width:100%;height:auto;border-radius:5px}
+.article-content h2,.article-content h3{line-height:1.3}
+.article-content a{color:#315b47}
+.article-content blockquote{border-left:3px solid #9aa99c;padding-left:18px;color:#656b63;margin-left:0}
+.article-cover{width:100%;max-height:430px;object-fit:cover;margin:15px 0 25px;border-radius:5px}
+.login-card{width:min(420px,100%);margin:auto}
+.login-card p,.help{font:13px/1.65 Arial,sans-serif;color:var(--muted)}
+.field{margin:14px 0}
+.field label{display:block;font:12px Arial,sans-serif;font-weight:700;margin:0 0 7px}
+textarea{min-height:130px;resize:vertical;line-height:1.5}
+textarea#postBody{min-height:260px;font-family:Arial,sans-serif}
+.admin-modal{width:min(1050px,100%)}
+.tabs{display:flex;gap:7px;border-bottom:1px solid var(--line);margin-bottom:22px;flex-wrap:wrap}
+.tab{border:0;background:none;padding:12px 14px;color:var(--muted);border-bottom:2px solid transparent;font:13px Arial,sans-serif}
+.tab.active{color:var(--accent);border-color:var(--accent);font-weight:700}
+.admin-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.check-row{display:flex;align-items:center;gap:9px;font:13px Arial,sans-serif;margin:12px 0}
+.check-row input{width:auto}
+.admin-list{border:1px solid var(--line);border-radius:5px;overflow:hidden}
+.admin-item{display:flex;justify-content:space-between;align-items:center;gap:15px;padding:14px;border-bottom:1px solid var(--line)}
+.admin-item:last-child{border-bottom:0}
+.admin-item strong{display:block;font-size:15px;margin-bottom:5px}
+.admin-item small{font:11px Arial,sans-serif;color:var(--muted)}
+.admin-item-actions{display:flex;gap:6px;flex-wrap:wrap}
+.notice{padding:12px 14px;background:var(--soft);border:1px solid #dce4dc;border-radius:5px;font:12px/1.6 Arial,sans-serif;color:#405348;margin:12px 0}
+.warning{background:#fff7e9;border-color:#f0dfbd;color:#76551c}
+.hidden{display:none!important}
+.form-actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:17px}
+.file-label{display:inline-flex;align-items:center;gap:8px;border:1px dashed #b9c0b8;padding:10px 13px;border-radius:5px;font:12px Arial,sans-serif;cursor:pointer}
+.file-label input{display:none}
+#coverPreview{max-width:180px;max-height:110px;object-fit:cover;display:block;margin-top:10px;border-radius:4px}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#202a24;color:white;padding:12px 18px;border-radius:5px;font:13px Arial,sans-serif;z-index:50;display:none;max-width:90%;text-align:center}
+@media(max-width:850px){.post-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:600px){.header-inner{padding:20px}.header-actions .btn{padding:9px 11px}main{padding:30px 17px 55px}.post-grid{grid-template-columns:1fr}.admin-grid{grid-template-columns:1fr}.modal{padding:20px}.admin-item{align-items:flex-start;flex-direction:column}.toolbar select{flex:1}.intro h1{letter-spacing:-1.2px}}
+</style>
+</head>
+<body>
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="#" onclick="showHome();return false">Posts by Adil</a>
+    <div class="header-actions"><button class="btn secondary small" onclick="openAdmin()">Admin</button></div>
+  </div>
+</header>
+
+<main>
+  <section class="intro" id="intro">
+    <h1>Thoughts worth reading.</h1>
+    <p>Articles, ideas and reflections.</p>
+  </section>
+  <div class="toolbar" id="toolbar">
+    <input id="searchInput" type="search" placeholder="Search articles..." oninput="renderPosts()">
+    <select id="sortSelect" onchange="renderPosts()">
+      <option value="newest">Newest first</option>
+      <option value="oldest">Oldest first</option>
+      <option value="title">Title A–Z</option>
+    </select>
+  </div>
+  <nav class="category-strip" id="categoryStrip" aria-label="Categories"></nav>
+  <section class="post-grid" id="postGrid"></section>
+  <section id="reader" class="hidden"></section>
+</main>
+
+<footer>© <span id="year"></span> Posts by Adil</footer>
+
+<div class="modal-backdrop" id="modalBackdrop" onclick="backdropClose(event)">
+  <section class="modal" id="modalContent" role="dialog" aria-modal="true"></section>
+</div>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+"use strict";
+
+/*
+  POSTS BY ADIL
+  Single-file, browser-local edition.
+  No Firebase, external libraries, or server connection.
+  Posts and settings are stored in this browser's Local Storage.
+*/
+
+const DB_KEY = "postsByAdil_v1";
+const AUTH_KEY = "postsByAdil_adminHash_v1";
+const SESSION_KEY = "postsByAdil_adminSession_v1";
+const DEFAULT_ADMIN_HASH = "62011063879179ed31074dc821b935fdd758ac91d315743fd2d2dc5d6ee12490";
+// Install the supplied admin password once, without overwriting an existing password.
+if(!localStorage.getItem(AUTH_KEY)) localStorage.setItem(AUTH_KEY,DEFAULT_ADMIN_HASH);
+
+let db = loadDB();
+let activeCategory = "All";
+let editingId = null;
+let currentCover = "";
+let toastTimer = null;
+
+function starterDB(){
+  return {categories:["Essays","Education","Ideas"],posts:[]};
+}
+function loadDB(){
+  try{
+    const raw=localStorage.getItem(DB_KEY);
+    if(!raw) return starterDB();
+    const parsed=JSON.parse(raw);
+    return {
+      categories:Array.isArray(parsed.categories)?parsed.categories:["Essays"],
+      posts:Array.isArray(parsed.posts)?parsed.posts:[]
+    };
+  }catch(e){return starterDB();}
+}
+function saveDB(){
+  try{
+    localStorage.setItem(DB_KEY,JSON.stringify(db));
+    return true;
+  }catch(e){
+    notify("Storage is full. Try using smaller images or export a backup.");
+    return false;
+  }
+}
+function uid(){return "p_"+Date.now().toString(36)+"_"+Math.random().toString(36).slice(2,8);}
+function escapeHTML(s){
+  return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+}
+function safeHTML(html){
+  const template=document.createElement("template");
+  template.innerHTML=String(html||"");
+  template.content.querySelectorAll("script,style,iframe,object,embed,form,input,button,textarea,select").forEach(el=>el.remove());
+  template.content.querySelectorAll("*").forEach(el=>{
+    [...el.attributes].forEach(a=>{
+      const n=a.name.toLowerCase(),v=a.value.trim().toLowerCase();
+      if(n.startsWith("on") || (["href","src"].includes(n)&&v.startsWith("javascript:"))) el.removeAttribute(a.name);
+    });
+  });
+  return template.innerHTML;
+}
+function notify(message){
+  const el=document.getElementById("toast");
+  el.textContent=message;el.style.display="block";
+  clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.style.display="none",2800);
+}
+function formatDate(value){
+  if(!value)return "";
+  const d=new Date(value+"T12:00:00");
+  return Number.isNaN(d.getTime())?value:d.toLocaleDateString("en-US",{year:"numeric",month:"long",day:"numeric"});
+}
+function visiblePosts(){
+  return db.posts.filter(p=>p.status==="published");
+}
+function renderCategories(){
+  const cats=["All",...db.categories];
+  document.getElementById("categoryStrip").innerHTML=cats.map(c=>
+    `<button class="chip ${activeCategory===c?"active":""}" onclick="chooseCategory('${escapeHTML(c).replace(/'/g,"&#39;")}')">${escapeHTML(c)}</button>`
+  ).join("");
+}
+function chooseCategory(c){activeCategory=c;renderPosts();}
+function renderPosts(){
+  const query=document.getElementById("searchInput").value.trim().toLowerCase();
+  const sort=document.getElementById("sortSelect").value;
+  let posts=visiblePosts().filter(p=>
+    (activeCategory==="All"||p.category===activeCategory) &&
+    [p.title,p.excerpt,p.category,p.tags].join(" ").toLowerCase().includes(query)
+  );
+  posts.sort((a,b)=>{
+    if(!!a.pinned!==!!b.pinned)return a.pinned?-1:1;
+    if(sort==="oldest")return (a.date||"").localeCompare(b.date||"");
+    if(sort==="title")return a.title.localeCompare(b.title);
+    return (b.date||"").localeCompare(a.date||"");
+  });
+  const grid=document.getElementById("postGrid");
+  grid.innerHTML=posts.length?posts.map(p=>`
+    <article class="post-card">
+      ${p.cover?`<img class="cover" src="${p.cover}" alt="">`:`<div class="cover-placeholder">POSTS BY ADIL</div>`}
+      <div class="post-card-body">
+        <div class="meta">${escapeHTML(p.category)} · ${formatDate(p.date)} ${p.pinned?"· FEATURED":""}</div>
+        <h2>${escapeHTML(p.title)}</h2>
+        <p class="excerpt">${escapeHTML(p.excerpt||"")}</p>
+        <div class="post-actions"><button class="read-link" onclick="openPost('${p.id}')">Read article →</button><button class="share-link" onclick="sharePost('${p.id}')">Share · Copy link</button></div>
+      </div>
+    </article>`).join(""):`<div class="empty">No published articles found.</div>`;
+  renderCategories();
+}
+function showHome(){
+  document.getElementById("intro").classList.remove("hidden");
+  document.getElementById("toolbar").classList.remove("hidden");
+  document.getElementById("categoryStrip").classList.remove("hidden");
+  document.getElementById("postGrid").classList.remove("hidden");
+  document.getElementById("reader").classList.add("hidden");
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+function openPost(id){
+  const p=visiblePosts().find(x=>x.id===id);if(!p)return;
+  history.replaceState(null,"",location.pathname+location.search+"#post="+encodeURIComponent(id));
+  document.getElementById("intro").classList.add("hidden");
+  document.getElementById("toolbar").classList.add("hidden");
+  document.getElementById("categoryStrip").classList.add("hidden");
+  document.getElementById("postGrid").classList.add("hidden");
+  const reader=document.getElementById("reader");
+  reader.classList.remove("hidden");
+  reader.innerHTML=`
+    <button class="btn secondary small" onclick="showHome()">← All articles</button>
+    <div style="max-width:760px;margin:35px auto 0">
+      <div class="meta">${escapeHTML(p.category)} · ${formatDate(p.date)}</div>
+      <h1 style="font-size:clamp(35px,6vw,56px);font-weight:400;line-height:1.12;letter-spacing:-1.5px">${escapeHTML(p.title)}</h1>
+      ${p.cover?`<img class="article-cover" src="${p.cover}" alt="">`:""}
+      <p style="font:16px/1.7 Arial,sans-serif;color:var(--muted)">${escapeHTML(p.excerpt||"")}</p>
+      <div class="article-content">${safeHTML(p.content)}</div>
+      <p style="margin-top:28px"><button class="btn small" onclick="sharePost('${p.id}')">Share · Copy link</button></p>
+      <p style="margin-top:25px"><button class="btn secondary small" onclick="showHome()">← Back to articles</button></p>
+    </div>`;
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
+// Share links carry a text-only snapshot of the article in the URL fragment.
+// This lets a recipient read it without a database. Cover images are not embedded.
+function encodeShareData(obj){
+  const bytes=new TextEncoder().encode(JSON.stringify(obj));
+  let binary="";bytes.forEach(b=>binary+=String.fromCharCode(b));
+  return btoa(binary).replace(/\+/g,"-").replace(/\//g,"_").replace(/=+$/g,"");
+}
+function decodeShareData(value){
+  const base=value.replace(/-/g,"+").replace(/_/g,"/");
+  const binary=atob(base+"=".repeat((4-base.length%4)%4));
+  const bytes=Uint8Array.from(binary,c=>c.charCodeAt(0));
+  return JSON.parse(new TextDecoder().decode(bytes));
+}
+async function sharePost(id){
+  const p=visiblePosts().find(x=>x.id===id);if(!p){notify("Publish this post before sharing it.");return;}
+  const snapshot={title:p.title,category:p.category,date:p.date,excerpt:p.excerpt,content:p.content};
+  const link=location.href.split("#")[0]+"#shared="+encodeShareData(snapshot);
+  try{await navigator.clipboard.writeText(link);notify("Share link copied. It will work after you upload this HTML file to a public website.");}
+  catch(e){window.prompt("Copy this share link:",link);}
+}
+function openSharedPost(p){
+  if(!p||typeof p.title!=="string"||typeof p.content!=="string")return;
+  document.getElementById("intro").classList.add("hidden");
+  document.getElementById("toolbar").classList.add("hidden");
+  document.getElementById("categoryStrip").classList.add("hidden");
+  document.getElementById("postGrid").classList.add("hidden");
+  const reader=document.getElementById("reader");reader.classList.remove("hidden");
+  reader.innerHTML=`<button class="btn secondary small" onclick="showHome()">← All articles</button><div style="max-width:760px;margin:35px auto 0"><div class="meta">${escapeHTML(p.category||"Article")} · ${formatDate(p.date)}</div><h1 style="font-size:clamp(35px,6vw,56px);font-weight:400;line-height:1.12">${escapeHTML(p.title)}</h1><p style="font:16px/1.7 Arial,sans-serif;color:var(--muted)">${escapeHTML(p.excerpt||"")}</p><div class="article-content">${safeHTML(p.content)}</div><p style="margin-top:35px"><button class="btn secondary small" onclick="showHome()">← Back to articles</button></p></div>`;
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+function loadSharedLink(){
+  if(!location.hash.startsWith("#shared="))return;
+  try{openSharedPost(decodeShareData(decodeURIComponent(location.hash.slice(8))));}
+  catch(e){notify("This share link is invalid or incomplete.");}
+}
+
+/* Password is created by the site owner on first admin setup. */
+async function hashPassword(password){
+  const bytes=new TextEncoder().encode(password);
+  const hash=await crypto.subtle.digest("SHA-256",bytes);
+  return [...new Uint8Array(hash)].map(b=>b.toString(16).padStart(2,"0")).join("");
+}
+function isLoggedIn(){return sessionStorage.getItem(SESSION_KEY)==="yes";}
+function openAdmin(){
+  showModal(`<div class="login-card">
+    <div class="modal-head"><h2>Admin access</h2><button class="icon-btn" onclick="closeModal()">✕</button></div>
+    ${localStorage.getItem(AUTH_KEY)?`
+      <p>Sign in to manage your articles and categories.</p>
+      <form onsubmit="loginAdmin(event)">
+        <div class="field"><label>ADMIN PASSWORD</label><input id="loginPassword" type="password" required autocomplete="current-password" placeholder="Enter your password"></div>
+        <button class="btn" type="submit">Sign in</button>
+      </form>
+      <p class="help">If you lose this password, use the reset option in the source file instructions. Your password is stored as a browser hash, not as plain text.</p>`
+    :`
+      <div class="notice warning">First-time setup. Create your private admin password. Use at least 10 characters and keep it somewhere safe.</div>
+      <form onsubmit="createAdmin(event)">
+        <div class="field"><label>CREATE ADMIN PASSWORD</label><input id="newPassword" type="password" minlength="10" required autocomplete="new-password" placeholder="At least 10 characters"></div>
+        <div class="field"><label>CONFIRM PASSWORD</label><input id="confirmPassword" type="password" minlength="10" required autocomplete="new-password" placeholder="Enter it again"></div>
+        <button class="btn" type="submit">Create admin password</button>
+      </form>`}
+  </div>`);
+}
+async function createAdmin(event){
+  event.preventDefault();
+  const a=document.getElementById("newPassword").value,b=document.getElementById("confirmPassword").value;
+  if(a!==b){notify("Passwords do not match.");return;}
+  if(a.length<10){notify("Use at least 10 characters.");return;}
+  if(!crypto.subtle){notify("Secure password setup requires a modern browser on HTTPS or localhost.");return;}
+  localStorage.setItem(AUTH_KEY,await hashPassword(a));
+  sessionStorage.setItem(SESSION_KEY,"yes");
+  notify("Admin password created.");showDashboard();
+}
+async function loginAdmin(event){
+  event.preventDefault();
+  const p=document.getElementById("loginPassword").value;
+  if(!crypto.subtle){notify("Secure login requires HTTPS or localhost.");return;}
+  if(await hashPassword(p)!==localStorage.getItem(AUTH_KEY)){notify("Incorrect password.");return;}
+  sessionStorage.setItem(SESSION_KEY,"yes");showDashboard();
+}
+function logoutAdmin(){sessionStorage.removeItem(SESSION_KEY);closeModal();notify("Signed out.");}
+function showDashboard(){
+  if(!isLoggedIn()){openAdmin();return;}
+  showModal(`<div class="admin-modal">
+    <div class="modal-head"><div><h2>Admin Dashboard</h2><div class="help">Manage your Posts by Adil website</div></div><button class="icon-btn" onclick="closeModal()">✕</button></div>
+    <div class="tabs">
+      <button class="tab active" id="tab-posts" onclick="switchTab('posts')">Posts</button>
+      <button class="tab" id="tab-editor" onclick="switchTab('editor')">Write a post</button>
+      <button class="tab" id="tab-categories" onclick="switchTab('categories')">Categories</button>
+      <button class="tab" id="tab-backup" onclick="switchTab('backup')">Backup</button>
+    </div>
+    <div id="panel-posts">${postsPanel()}</div>
+    <div id="panel-editor" class="hidden">${editorPanel()}</div>
+    <div id="panel-categories" class="hidden">${categoriesPanel()}</div>
+    <div id="panel-backup" class="hidden">${backupPanel()}</div>
+    <div class="form-actions"><button class="btn secondary small" onclick="logoutAdmin()">Sign out</button></div>
+  </div>`);
+}
+function postsPanel(){
+  const posts=[...db.posts].sort((a,b)=>(b.updated||"").localeCompare(a.updated||""));
+  return `<div class="form-actions" style="margin:0 0 15px"><button class="btn" onclick="newPost()">+ New post</button></div>
+    <div class="admin-list">${posts.length?posts.map(p=>`
+      <div class="admin-item">
+        <div><strong>${escapeHTML(p.title)}</strong><small>${escapeHTML(p.category)} · ${p.status} ${p.pinned?"· Featured":""}</small></div>
+        <div class="admin-item-actions">
+          <button class="btn secondary small" onclick="editPost('${p.id}')">Edit</button>
+          <button class="btn secondary small" onclick="togglePublish('${p.id}')">${p.status==="published"?"Unpublish":"Publish"}</button>
+          <button class="btn danger small" onclick="deletePost('${p.id}')">Delete</button>
+        </div>
+      </div>`).join(""):`<div class="empty">You have not written any posts yet.</div>`}</div>`;
+}
+function editorPanel(){
+  const p=editingId?db.posts.find(x=>x.id===editingId):null;
+  return `<h3 style="font-weight:400">${p?"Edit article":"Write a new article"}</h3>
+    <form onsubmit="savePost(event)">
+      <div class="field"><label>TITLE</label><input id="postTitle" maxlength="160" required value="${escapeHTML(p?.title||"")}" placeholder="Article title"></div>
+      <div class="admin-grid">
+        <div class="field"><label>CATEGORY</label><select id="postCategory">${db.categories.map(c=>`<option ${p?.category===c?"selected":""}>${escapeHTML(c)}</option>`).join("")}</select></div>
+        <div class="field"><label>PUBLICATION DATE</label><input id="postDate" type="date" value="${escapeHTML(p?.date||new Date().toISOString().slice(0,10))}"></div>
+      </div>
+      <div class="field"><label>SHORT DESCRIPTION</label><textarea id="postExcerpt" maxlength="350" style="min-height:75px" placeholder="A short introduction...">${escapeHTML(p?.excerpt||"")}</textarea></div>
+      <div class="field"><label>ARTICLE CONTENT (HTML supported)</label><textarea id="postBody" required placeholder="Write your article here. You can use paragraphs, headings, lists and links.">${escapeHTML(p?.content||"")}</textarea><div class="help">Basic HTML is supported: &lt;p&gt;, &lt;h2&gt;, &lt;h3&gt;, &lt;strong&gt;, &lt;em&gt;, &lt;ul&gt;, &lt;li&gt;, &lt;blockquote&gt;, &lt;a&gt;.</div></div>
+      <div class="field"><label>COVER IMAGE</label><label class="file-label">Choose image<input id="coverFile" type="file" accept="image/*" onchange="loadCover(event)"></label><button type="button" class="btn secondary small" onclick="removeCover()">Remove image</button><img id="coverPreview" src="${p?.cover||currentCover||""}" style="${p?.cover||currentCover?"":"display:none"}" alt="Cover preview"></div>
+      <div class="field"><label>TAGS (comma separated)</label><input id="postTags" value="${escapeHTML(p?.tags||"")}" placeholder="education, ideas, society"></div>
+      <label class="check-row"><input id="postPinned" type="checkbox" ${p?.pinned?"checked":""}> Feature this post on the homepage</label>
+      <div class="admin-grid">
+        <div class="field"><label>STATUS</label><select id="postStatus"><option value="draft" ${p?.status!=="published"?"selected":""}>Draft</option><option value="published" ${p?.status==="published"?"selected":""}>Published</option></select></div>
+      </div>
+      <div class="form-actions"><button class="btn" type="submit">Save post</button><button class="btn secondary" type="button" onclick="editingId=null;currentCover='';switchTab('posts')">Cancel</button></div>
+    </form>`;
+}
+function categoriesPanel(){
+  return `<h3 style="font-weight:400">Create a category</h3>
+    <form onsubmit="addCategory(event)" class="toolbar"><input id="newCategory" maxlength="40" required placeholder="Category name"><button class="btn" type="submit">Add category</button></form>
+    <div class="admin-list">${db.categories.map(c=>`<div class="admin-item"><div><strong>${escapeHTML(c)}</strong><small>${db.posts.filter(p=>p.category===c).length} post(s)</small></div><div class="admin-item-actions"><button class="btn danger small" onclick="deleteCategory('${escapeHTML(c).replace(/'/g,"&#39;")}')">Delete</button></div></div>`).join("")||'<div class="empty">No categories yet.</div>'}</div>
+    <p class="help">A category cannot be deleted while posts are assigned to it. Edit those posts first.</p>`;
+}
+function backupPanel(){
+  return `<h3 style="font-weight:400">Backup and restore</h3>
+    <p class="help">Export your posts, categories and saved image data as a JSON backup. Keep a copy somewhere safe.</p>
+    <div class="form-actions"><button class="btn" onclick="exportBackup()">Download backup</button><label class="file-label">Restore backup<input type="file" accept="application/json,.json" onchange="importBackup(event)"></label></div>
+    <div class="notice warning">Important: this site stores data only in this browser. Clearing browser data, changing devices or using another browser will not transfer your posts. Export backups regularly.</div>
+    <h3 style="font-weight:400;margin-top:28px">Password reset</h3>
+    <p class="help">To reset the admin password on this browser, sign out, then open the browser developer console and run: <code>localStorage.removeItem("${AUTH_KEY}")</code>. This removes only the password hash. It does not delete your posts.</p>`;
+}
+function switchTab(name){
+  ["posts","editor","categories","backup"].forEach(t=>{
+    document.getElementById("panel-"+t).classList.toggle("hidden",t!==name);
+    document.getElementById("tab-"+t).classList.toggle("active",t===name);
+  });
+}
+function newPost(){editingId=null;currentCover="";document.getElementById("panel-editor").innerHTML=editorPanel();switchTab("editor");}
+function editPost(id){editingId=id;currentCover="";document.getElementById("panel-editor").innerHTML=editorPanel();switchTab("editor");}
+function savePost(event){
+  event.preventDefault();
+  const title=document.getElementById("postTitle").value.trim();
+  if(!title){notify("Add a title first.");return;}
+  const existing=editingId?db.posts.find(p=>p.id===editingId):null;
+  const post={
+    id:editingId||uid(),title,
+    category:document.getElementById("postCategory").value,
+    date:document.getElementById("postDate").value||new Date().toISOString().slice(0,10),
+    excerpt:document.getElementById("postExcerpt").value.trim(),
+    content:document.getElementById("postBody").value,
+    cover:currentCover||existing?.cover||"",
+    tags:document.getElementById("postTags").value.trim(),
+    pinned:document.getElementById("postPinned").checked,
+    status:document.getElementById("postStatus").value,
+    updated:new Date().toISOString()
+  };
+  if(existing)db.posts[db.posts.findIndex(p=>p.id===editingId)]=post;
+  else db.posts.unshift(post);
+  if(saveDB()){editingId=null;currentCover="";notify("Post saved.");showDashboard();}
+}
+function togglePublish(id){
+  const p=db.posts.find(x=>x.id===id);if(!p)return;
+  p.status=p.status==="published"?"draft":"published";p.updated=new Date().toISOString();
+  if(saveDB()){showDashboard();renderPosts();notify(p.status==="published"?"Post published.":"Post moved to drafts.");}
+}
+function deletePost(id){
+  const p=db.posts.find(x=>x.id===id);if(!p)return;
+  if(!confirm(`Delete "${p.title}"? This cannot be undone unless you have a backup.`))return;
+  db.posts=db.posts.filter(x=>x.id!==id);
+  if(saveDB()){showDashboard();renderPosts();notify("Post deleted.");}
+}
+function addCategory(event){
+  event.preventDefault();const name=document.getElementById("newCategory").value.trim();
+  if(!name)return;
+  if(db.categories.some(c=>c.toLowerCase()===name.toLowerCase())){notify("That category already exists.");return;}
+  db.categories.push(name);if(saveDB()){showDashboard();switchTab("categories");renderPosts();notify("Category added.");}
+}
+function deleteCategory(name){
+  if(db.posts.some(p=>p.category===name)){notify("Move or delete the posts in this category first.");return;}
+  if(!confirm(`Delete category "${name}"?`))return;
+  db.categories=db.categories.filter(c=>c!==name);
+  if(saveDB()){showDashboard();switchTab("categories");renderPosts();notify("Category deleted.");}
+}
+function loadCover(event){
+  const file=event.target.files?.[0];if(!file)return;
+  if(!file.type.startsWith("image/")){notify("Choose an image file.");return;}
+  if(file.size>1.5*1024*1024){notify("Choose an image smaller than 1.5 MB to avoid filling browser storage.");return;}
+  const reader=new FileReader();
+  reader.onload=()=>{currentCover=reader.result;const img=document.getElementById("coverPreview");img.src=currentCover;img.style.display="block";};
+  reader.readAsDataURL(file);
+}
+function removeCover(){currentCover="";const img=document.getElementById("coverPreview");if(img){img.src="";img.style.display="none";}}
+function exportBackup(){
+  const blob=new Blob([JSON.stringify(db,null,2)],{type:"application/json"});
+  const url=URL.createObjectURL(blob);const a=document.createElement("a");
+  a.href=url;a.download="posts-by-adil-backup.json";a.click();URL.revokeObjectURL(url);
+}
+function importBackup(event){
+  const file=event.target.files?.[0];if(!file)return;
+  const reader=new FileReader();
+  reader.onload=()=>{
+    try{
+      const data=JSON.parse(reader.result);
+      if(!Array.isArray(data.posts)||!Array.isArray(data.categories))throw new Error();
+      if(!confirm("Replace the current posts and categories with this backup?"))return;
+      db={posts:data.posts,categories:data.categories};if(saveDB()){renderPosts();showDashboard();switchTab("posts");notify("Backup restored.");}
+    }catch(e){notify("That backup file is invalid.");}
+  };
+  reader.readAsText(file);
+}
+function showModal(content){
+  document.getElementById("modalContent").innerHTML=content;
+  document.getElementById("modalBackdrop").classList.add("show");
+}
+function closeModal(){document.getElementById("modalBackdrop").classList.remove("show");}
+function backdropClose(event){if(event.target.id==="modalBackdrop")closeModal();}
+document.addEventListener("keydown",e=>{if(e.key==="Escape")closeModal();});
+document.getElementById("year").textContent=new Date().getFullYear();
+renderPosts();
+loadSharedLink();
+</script>
+</body>
+</html>
